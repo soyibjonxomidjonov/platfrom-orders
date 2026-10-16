@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yoshlar Jobs
 
-## Getting Started
+Yoshlar uchun kichik buyurtmalar platformasi — **Next.js 16 + TypeScript** asosidagi to‘liq ishlaydigan interaktiv prototip. Alohida API server (FastAPI) talab qilinmaydi: frontend va server funksiyalari bitta loyihada.
 
-First, run the development server:
+## Texnologiyalar
+
+| Qatlam | Texnologiya |
+| --- | --- |
+| Framework | Next.js 16 (App Router, Server Actions) |
+| Til | TypeScript |
+| Dizayn | Tailwind CSS v4 + custom UI komponentlar |
+| Animatsiya | Motion |
+| Ikonkalar | lucide-react |
+| Forma | React Hook Form + Zod |
+| Auth | Auth.js (NextAuth v5) — Google |
+| AI | Groq SDK |
+| DB (3-bosqich) | PostgreSQL + Prisma |
+
+## Ishga tushirish
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env   # qiymatlarni to'ldiring
+npm run dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Asosiy prototip (buyurtmalar, filter, taklif formasi, AI) **ma'lumotlar bazasisiz** ishlaydi — barcha buyurtmalar `src/data/seed-orders.ts` dan olinadi.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Skriptlar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Buyruq | Vazifa |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm run build` | Production build |
+| `npm run typecheck` | TypeScript tekshiruvi |
+| `npm run db:generate` | Prisma client generatsiya |
+| `npm run db:push` | Schema'ni bazaga yuborish |
+| `npm run db:seed` | 6 buyurtmani bazaga yuklash |
 
-## Learn More
+## Sahifalar
 
-To learn more about Next.js, take a look at the following resources:
+| Sahifa | Yo‘l | Tavsif |
+| --- | --- | --- |
+| Bosh sahifa | `/` | Hero, 6 buyurtma, kategoriya filtri |
+| Buyurtma | `/orders/[id]` | Batafsil, budjet, taklif yuborish |
+| Takliflar | `/proposals` | Yuborilgan takliflar |
+| Dashboard | `/dashboard` | Profil + takliflar |
+| Login | `/login` | Google orqali kirish |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+AI yordamchi barcha sahifalarda o‘ng pastki burchakda ochilib-yopiladigan widget sifatida ishlaydi va faqat mavjud buyurtmalar bo‘yicha maslahat beradi.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Ishlab chiqish bosqichlari
 
-## Deploy on Vercel
+1. **Yadro (tayyor):** 6 buyurtma, filter, tafsilot, taklif formasi (validatsiya + tasdiqlash), AI yordamchi.
+2. **Dizayn (keyingi):** landing sayqallash, rasmlar, animatsiya, to‘liq responsive.
+3. **To‘liq integratsiya:** Google login (Prisma adapter), PostgreSQL, takliflarni bazaga saqlash.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Maxfiylik
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Barcha maxfiy kalitlar (`.env`) faqat serverda ishlatiladi va git'ga yuklanmaydi. Google OAuth lokal ishlashi uchun Google Cloud Console'da quyidagi redirect URI qo‘shilishi kerak:
+
+```
+http://localhost:3000/api/auth/callback/google
+```

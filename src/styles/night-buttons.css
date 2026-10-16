@@ -1,0 +1,111 @@
+/* Shared blue button palette; the night-mode refinements follow below. */
+:root :is(button, .landing-button, .nav-login, .order-detail-link, .od-apply, .pm-submit, .pm-link, .pm-cancel) {
+    --primary: #2563eb;
+    --ring: #60a5fa;
+}
+
+:root :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary) {
+    background: linear-gradient(115deg, #2879ef, #2455d6);
+    color: #fff;
+    border-color: #3875e9;
+    box-shadow: 0 7px 20px #2563eb24, inset 0 1px 0 #ffffff30;
+}
+
+:root :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary):not(:disabled):hover {
+    background: linear-gradient(115deg, #256ce0, #1d4dc4);
+    box-shadow: 0 9px 24px #2563eb33;
+}
+
+:root :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel) {
+    background: #edf5ff;
+    color: #215bc5;
+    border-color: #bcd5fa;
+}
+
+:root :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel):not(:disabled):hover {
+    background: #dfedff;
+    border-color: #7eacf0;
+}
+
+:root .secondary-button svg { color: #2563eb; }
+:root button .bg-primary { background: linear-gradient(115deg, #2879ef, #2455d6); }
+
+:root :is(.landing-button, .nav-login, .order-detail-link, .od-apply, .pm-submit, .pm-link, .pm-cancel):focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 4px;
+}
+
+:root[data-theme="dark"] :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary) {
+    background: linear-gradient(115deg, #2879ef, #2455d6);
+    color: #fff;
+    border-color: #518cf366;
+    box-shadow: 0 7px 22px #1766ec2b, inset 0 1px 0 #ffffff26;
+}
+
+:root[data-theme="dark"] :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary):not(:disabled):hover {
+    background: linear-gradient(115deg, #3588fa, #2d65e8);
+    box-shadow: 0 9px 26px #2379f03d, inset 0 1px 0 #ffffff33;
+}
+
+:root[data-theme="dark"] :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel) {
+    background: #122544;
+    color: #a9d1ff;
+    border-color: #355f946e;
+}
+
+:root[data-theme="dark"] :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel):not(:disabled):hover {
+    background: #193458;
+    border-color: #5798e8a3;
+}
+
+:root[data-theme="dark"] .secondary-button svg {
+    color: #8fc6ff;
+}
+
+:root[data-theme="dark"] button .bg-primary {
+    background: linear-gradient(115deg, #2879ef, #2455d6);
+}
+
+:root[data-theme="dark"] :is(.landing-button, .nav-login, .order-detail-link, .od-apply, .pm-submit, .pm-link, .pm-cancel):focus-visible {
+    outline: 3px solid #81bbff;
+    outline-offset: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary) {
+    background: linear-gradient(115deg, #2879ef, #2455d6);
+    color: #fff;
+    border-color: #518cf366;
+    box-shadow: 0 7px 22px #1766ec2b, inset 0 1px 0 #ffffff26;
+}
+
+:root:not([data-theme="light"]) :is(.primary-button, .nav-login, .ai-button, .od-apply, .pm-submit, button.bg-primary, a.bg-primary):not(:disabled):hover {
+    background: linear-gradient(115deg, #3588fa, #2d65e8);
+    box-shadow: 0 9px 26px #2379f03d, inset 0 1px 0 #ffffff33;
+}
+
+:root:not([data-theme="light"]) :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel) {
+    background: #122544;
+    color: #a9d1ff;
+    border-color: #355f946e;
+}
+
+:root:not([data-theme="light"]) :is(.secondary-button, .order-detail-link, .pm-link, .pm-cancel):not(:disabled):hover {
+    background: #193458;
+    border-color: #5798e8a3;
+}
+
+:root:not([data-theme="light"]) .secondary-button svg {
+    color: #8fc6ff;
+}
+
+:root:not([data-theme="light"]) button .bg-primary {
+    background: linear-gradient(115deg, #2879ef, #2455d6);
+}
+
+:root:not([data-theme="light"]) :is(.landing-button, .nav-login, .order-detail-link, .od-apply, .pm-submit, .pm-link, .pm-cancel):focus-visible {
+    outline: 3px solid #81bbff;
+    outline-offset: 4px;
+}
+}
+

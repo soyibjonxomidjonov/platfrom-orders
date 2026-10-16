@@ -1,0 +1,114 @@
+/* Background-only ownership: keep layout, marketplace and Claude's details styles intact. */
+.home-page {
+  --ym-paper: #fffdf7;
+  --ym-wash-blue: #dff2ff;
+  --ym-wash-purple: #eeebff;
+  --ym-texture-filter: none;
+  --ym-texture-opacity: .9;
+  --ym-glow-opacity: 0;
+  --ym-glass: #ffffffbf;
+  --ym-glass-border: #ffffffd9;
+  background-color: var(--ym-paper);
+  background-image:
+    radial-gradient(ellipse at 0 24%, color-mix(in srgb, var(--ym-wash-blue) 60%, transparent), transparent 33%),
+    radial-gradient(ellipse at 100% 60%, color-mix(in srgb, var(--ym-wash-purple) 45%, transparent), transparent 35%);
+}
+
+/* A quiet painted canvas behind the existing, interactive hero. */
+.home-page .landing-hero {
+  isolation: isolate;
+  background: var(--ym-paper);
+}
+
+.home-page .landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: url("/images/yoshlar-watercolor-background.png") center / cover no-repeat;
+  opacity: var(--ym-texture-opacity);
+  filter: var(--ym-texture-filter);
+  -webkit-mask-image: linear-gradient(#000 0%, #000 83%, transparent 100%);
+  mask-image: linear-gradient(#000 0%, #000 83%, transparent 100%);
+}
+
+.home-page .landing-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 78% 35%, #294be942, transparent 43%),
+    radial-gradient(ellipse at 38% 82%, #7139d22c, transparent 40%),
+    radial-gradient(circle at 13% 17%, #91edff 0 1px, #1784ff99 2px, transparent 5px),
+    radial-gradient(circle at 89% 12%, #d7c2ff 0 1px, #6d4dff80 2px, transparent 6px),
+    radial-gradient(circle at 57% 69%, #5ed9ff 0 1px, transparent 4px);
+  opacity: var(--ym-glow-opacity);
+}
+
+.home-page .hero-image-wrap {
+  border-color: var(--ym-glass-border);
+  box-shadow: 0 22px 60px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.home-page .hero-visual::before {
+  border-color: color-mix(in srgb, var(--primary) 19%, transparent);
+}
+
+.home-page .stats-strip {
+  background: var(--ym-glass);
+  border-color: color-mix(in srgb, var(--border) 60%, var(--ym-glass-border));
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 32px color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+
+.home-page .category-section {
+  background:
+    radial-gradient(ellipse at 7% 15%, color-mix(in srgb, var(--ym-wash-blue) 70%, transparent), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--ym-wash-purple) 55%, transparent), transparent 60%),
+    var(--ym-paper);
+  border-color: color-mix(in srgb, var(--border) 65%, transparent);
+}
+
+.home-page .marketplace-section {
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--ym-wash-blue) 40%, transparent), transparent 50%),
+    color-mix(in srgb, var(--ym-paper) 78%, var(--section-surface));
+}
+
+/* Explicit theme selection takes precedence over the operating system. */
+:root[data-theme="dark"] .home-page {
+  --ym-paper: #080e1b;
+  --ym-wash-blue: #132d53;
+  --ym-wash-purple: #201b42;
+  --ym-texture-filter: invert(1) hue-rotate(180deg) saturate(1.4);
+  --ym-texture-opacity: .23;
+  --ym-glow-opacity: 1;
+  --ym-glass: #101b2dcc;
+  --ym-glass-border: #2d3d5b66;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home-page {
+    --ym-paper: #080e1b;
+    --ym-wash-blue: #132d53;
+    --ym-wash-purple: #201b42;
+    --ym-texture-filter: invert(1) hue-rotate(180deg) saturate(1.4);
+    --ym-texture-opacity: .23;
+    --ym-glow-opacity: 1;
+    --ym-glass: #101b2dcc;
+    --ym-glass-border: #2d3d5b66;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-page .landing-hero::before {
+    background-size: auto 100%;
+    background-position: 48% top;
+  }
+  .home-page .hero-copy {
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--ym-paper) 65%, transparent), transparent 75%);
+  }
+}

@@ -1,0 +1,119 @@
+// Prisma schema — YoshlarMakon
+// Asosiy prototip bazasiz (seed-orders.ts + localStorage) ishlaydi.
+// Bu schema 3-bosqich uchun: PostgreSQL + Auth.js + buyurtma/taklif/sevimlilarni saqlash.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Auth.js (NextAuth) modellari ----------
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  proposals     Proposal[]
+  favorites     Favorite[]
+  createdAt     DateTime   @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- Domen modellari ----------
+
+enum OrderCategory {
+  Dizayn
+  Video
+  Veb
+}
+
+model Order {
+  id          String        @id // "B01" kabi kod
+  title       String
+  category    OrderCategory
+  budget      Int // so'mda
+  summary     String
+  description String
+  skills      String[]
+  deadline    String
+  imagePath   String?
+  proposals   Proposal[]
+  favorites   Favorite[]
+  createdAt   DateTime      @default(now())
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Proposal {
+  id            String         @id @default(cuid())
+  orderId       String
+  applicantName String
+  portfolioUrl  String
+  message       String?
+  status        ProposalStatus @default(PENDING)
+  userId        String?
+  createdAt     DateTime       @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user  User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Bir foydalanuvchi bitta buyurtmaga faqat bir marta taklif yuboradi
+  @@unique([userId, orderId])
+}
+
+model Favorite {
+  id      String @id @default(cuid())
+  userId  String
+  orderId String
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orderId])
+}

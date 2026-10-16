@@ -1,0 +1,39 @@
+# YoshlarMakon — Docker Compose
+# Eslatma: asosiy prototip `npm run dev` bilan bazasiz ham ishlaydi.
+# Bu compose to'liq (PostgreSQL + sayt) ishga tushirish uchun.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: yoshlar_jobs
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d yoshlar_jobs"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Compose ichida DB host — "db" (env_file dagi localhost'ni bekor qiladi)
+      DATABASE_URL: postgresql://app:app@db:5432/yoshlar_jobs?schema=public
+      AUTH_TRUST_HOST: "true"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
